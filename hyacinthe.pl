@@ -88,31 +88,12 @@ passage(entree_arene, sud, maison):-
 	fin.
 
 
-passage(dans_arene, nord, terrain) :-
-    position(disque, en_main).
-    
-passage(dans_arene, sud, terrain) :-
-    position(disque, en_main).
-    
-passage(dans_arene, est, terrain) :-
+passage(dans_arene, X, terrain) :-
     position(disque, en_main).
 
-passage(dans_arene, ouest, terrain) :-
-    position(disque, en_main).
-
-
-passage(dans_arene, nord, terrain) :-
-    position(poeme, en_main).
-    
-passage(dans_arene, sud, terrain) :-
-    position(poeme, en_main).
-    
-passage(dans_arene, est, terrain) :-
+passage(dans_arene, X, terrain) :-
     position(poeme, en_main).
 
-passage(dans_arene, ouest, terrain) :-
-    position(poeme, en_main).
-    
 
 position_courante(entree_arene).
 
