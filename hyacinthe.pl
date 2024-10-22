@@ -203,6 +203,10 @@ lancer(poeme, ouest):-
 	fin.	
 
 
+lancer(X, Y) :- 
+	\+ position(X, en_main),
+	write("Tu n'as pas cet objet en ta possession."), nl.
+
 % DESCRIPTION DES OBJETS ET EMPLACEMENTS
 % Objets
 
