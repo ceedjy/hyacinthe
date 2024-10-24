@@ -152,6 +152,7 @@ passage(palais, X, palais) :-
 	epreuve(X, oui), 
 	write("Tu as déja remporté cette épreuve."), nl.
 	
+% passages pour la course 
 passage(palais, ouest, asphodele) :-
 	epreuve(ouest, non),
 	write("Tu choisi l'épreuve de la course."), nl,
@@ -190,17 +191,22 @@ passage(ruelle, est, asphodele) :-
 	write("Elle n'a meme pas remarqué ton départ."), nl.
 	
 passage(ruelle, ouest, fin_parfaite) :-
-	write("Tu décides de prendre la fuite en volant avec les chuassures d'hermès."), nl.
+	write("Tu décides de prendre la fuite en volant avec les chuassures d'hermès."), nl,
+	write("Tu réussi à remonter dans le monde des vivants sans te faire remarquer."), nl. 
 
 passage(piste, sud, palais) :-
 	write("Tu retourne au palais en ayant remporté l'épreuve de la course !"), nl.
 
-passage(piste, est, maison) :- 
+passage(piste, est, maison) :-  % un piege si le joueur tente d aller la ou il faut pas 
 	write("Tu tente de prendre la fuite !"), nl,
 	write("Mais tu te fais rapidement rattrapé par Cerbère, le gardien des enfers."), nl, 
 	write("Tu es jeté au Tartar sans plus d'explications."), nl, 
 	write("Tu ne deviendras jamais un héro et Apollon passera le restant de ses jours à hérer sans but dans le monde des vivants en espérant ton retour sans savoir que cela n'arrivera jamais."), nl, 
 	fin.
+	
+% passages pour 
+
+
 
 % position actuelle lorsque le jeu démare, il change tout au long de la partie 
 position_courante(entree_arene).
@@ -365,9 +371,7 @@ decrire(piste) :-
 	position(lourde_chaussure, en_main),
 	write("Tu te place sur le départ avec les lourdes chaussures aux pieds."), nl,
 	write("Hélas elle te ralentissent énormément dans ta course et tu perd en arrivant à la deuxième place."), nl, 
-	write("Hadès t'avais prévenu. Tu es jeté au Tartar."), nl, 
-	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl, 
-	fin.
+	decrireFin, !.
 	
 decrire(piste) :-
 	\+ position(chaussure_hermes, en_main),
@@ -375,9 +379,7 @@ decrire(piste) :-
 	write("Tu te place sur le départ avec les petites chaussures aux pieds."), nl,
 	write("Hélas elle te font mal aux pieds et courir devient difficile."), nl, 
 	write("Tu perd en arrivant à la deuxième place."), nl, 
-	write("Hadès t'avais prévenu. Tu es jeté au Tartar."), nl, 
-	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl, 
-	fin.
+	decrireFin, !.
 	
 decrire(piste) :- 
 	\+ position(chaussure_hermes, en_main),
@@ -389,11 +391,40 @@ decrire(piste) :-
 	write("Grâce à cela, tu gagne la course haut la main."), nl, 
 	write("Pour te préparer à la prochaine épreuve, tu dois te rendre au palais qui se trouve au sud."), nl,
 	changer_epreuve(ouest).
-	
 
-% description de la bonne fin 
+% description des fins suivant le nombre d épreuve réussi 
+% aucune epreuve reussi 
+decrireFin :-
+	epreuve(ouest, non),
+	epreuve(nord, non),
+	epreuve(est, non),
+	write("Hadès t'avais prévenu. Tu es jeté au Tartar."), nl, 
+	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl,
+	fin, !.
+	
+% une epreuve reussi 
+decrireFin :-
+	epreuve(ouest, X),
+	epreuve(nord, Y),
+	epreuve(est, Z),
+	(X == oui /\ Y == Z == non) \/ (Y == oui /\ X == Z == non) \/ (Z == oui /\ Y == X == non), % voir si ça marche 
+	write("Hadès t'avais prévenu. Tu es jeté au Tartar."), nl, 
+	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl,
+	fin, !.
+
+% deux epreuve reussi 
+decrireFin :-
+	epreuve(ouest, X),
+	epreuve(nord, Y),
+	epreuve(est, Z),
+	(X == non /\ Y == Z == oui) \/ (Y == non /\ X == Z == oui) \/ (Z == non /\ Y == X == oui), % voir si ça marche 
+	write("Hadès t'avais prévenu. Tu ne remonteras pas à la surface."), nl, 
+	write("Cependant il sait lêtre clément. Tu ne finira pas au Tartar mais a Asphodèle."), nl, 
+	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl,
+	fin, !.
+
+% description de la bonne fin (trois epreuve reussi ou autre fin avec passage secret)
 decrire(fin_parfaite) :- 
-	write("Tu réussi à remonter dans le monde des vivants sans te faire remarquer."), nl, 
 	write("Tu retrouve Apollon dans l'arène, au même endroit où tu es décédé. Il a l'air totalemnt vide."), nl,
 	write("Tu te rapproche doucement de lui et met une main sur son épaule."), nl, 
 	write("Ses yeux s'illuminent en te voyant. Il se lève d'un bond et saute dans tes bras pour te serrer très fort contre lui."), nl, 
