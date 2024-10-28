@@ -13,6 +13,7 @@
 :- retractall(position(_, _)), retractall(position_courante(_)).
 
 % position du joueur. Ce prédicat sera modifié au fur et à mesure de la partie (avec `retract` et `assert`)
+position_courante(entree_arene).
 
 % on déclare des opérateurs, pour autoriser `prendre disque` au lieu de `prendre(disque)`
 :- op(1000, fx, prendre).
@@ -33,6 +34,9 @@ position(disque, dans_arene).
 position(lourde_chaussure, cours_forest).
 position(petite_chaussure, cours_forest).
 position(chaussure_hermes, ruelle).
+position(disque_bois, arene_enfer).
+position(disque_acier, arene_enfer).
+position(disque_apollon, arene_enfer).
 
 % epreuve des JO effectués ou non en fonction des directions des portes dans le palais. Evolue au long de la partie
 epreuve(ouest, non).
@@ -148,9 +152,16 @@ passage(palais, sud, maison) :-
 	write("Tu ne deviendra jamais un héro."), nl, 
 	fin.
 	
+% aux enfers :
 passage(palais, X, palais) :-
 	epreuve(X, oui), 
 	write("Tu as déja remporté cette épreuve."), nl.
+	
+passage(W, sud, palais) :-
+	epreuve(ouest, oui), 
+	epreuve(nord, oui), 
+	epreuve(est, oui), 
+	decrire(fin_trois_epreuve), !.
 	
 % passages pour la course 
 passage(palais, ouest, asphodele) :-
@@ -204,12 +215,22 @@ passage(piste, est, maison) :-  % un piege si le joueur tente d aller la ou il f
 	write("Tu ne deviendras jamais un héro et Apollon passera le restant de ses jours à hérer sans but dans le monde des vivants en espérant ton retour sans savoir que cela n'arrivera jamais."), nl, 
 	fin.
 	
-% passages pour 
+% passages pour le lancer de disque 
+passage(palais, nord, arene_enfer) :-
+	epreuve(nord, non),
+	write("Tu choisi l'épreuve du lancer de disque."), nl,
+	write("Une nymphe t'acceuille et t'habille pour l'épreuve."), nl, 
+	write("Vous sortez du palais et vous vous dirigez vers le lieux de l'épreuve."), nl.
 
+% il ne peut pas partir sans avoir pris un disque
+passage(arene_enfer, nord, terrain_enfer) :-
+	position(disque_bois, en_main).
 
-
-% position actuelle lorsque le jeu démare, il change tout au long de la partie 
-position_courante(entree_arene).
+passage(arene_enfer, nord, terrain_enfer) :-
+	position(disque_acier, en_main).
+	
+passage(arene_enfer, nord, terrain_enfer) :-
+	position(disque_apollon, en_main).
 
 
 % affiche les instructions du jeu
@@ -229,8 +250,10 @@ oracle :-
         nl.
 
 % l instruction lancer :
+% lancer dans_arene
 lancer(disque, nord):-
 	position(disque, en_main),
+	position_courante(dans_arene),
 	write("Quel beau lancé !"), nl,
 	write("Oh non ! Un violent coup de vent fait dévier le disque !"),nl,
 	write("Mais je connais ce vent ! C'est maléfique Zéphyr, dieu du vent !"),nl,
@@ -241,6 +264,7 @@ lancer(disque, nord):-
 	
 lancer(disque, sud):-
 	position(disque, en_main),
+	position_courante(dans_arene),
 	write("Quel beau lancé !"),nl,
 	write("Oh non ! Il file droit vers la ville !"),nl,
 	write("Hermes qui passait par là ce le prend en pleine poire."),nl,
@@ -250,6 +274,7 @@ lancer(disque, sud):-
 	
 lancer(disque, est):-
 	position(disque, en_main),
+	position_courante(dans_arene),
 	write("Quel beau lancé !"),nl,
 	write("Dommage pour la direction !"),nl,
 	write("Mais attend, quelqu'un semble l'avoir arrêté."),nl,
@@ -259,6 +284,7 @@ lancer(disque, est):-
 
 lancer(disque, ouest):-
 	position(disque, en_main),
+	position_courante(dans_arene),
 	write("Quel beau lancé !"),nl,
 	write("Oh non, il file tout droit vers Apollon !"),nl,
 	write("Il n'a pas le temps de l'esquiver et c'est le drame !"),nl,
@@ -267,6 +293,7 @@ lancer(disque, ouest):-
 	
 lancer(poeme, nord):-
 	position(poeme, en_main),
+	position_courante(dans_arene),
 	write("Tu oses lancer le poème d'Apollon !"), nl,
 	write("Apollon est offensé."),nl,
 	write("Tu n'es plus son apprenti désormais."),nl,
@@ -275,6 +302,7 @@ lancer(poeme, nord):-
 	
 lancer(poeme, sud):-
 	position(poeme, en_main),
+	position_courante(dans_arene),
 	write("Tu oses lancer le poème d'Apollon !"), nl,
 	write("Apollon est offensé."),nl,
 	write("Tu n'es plus son apprenti désormais."),nl,
@@ -288,15 +316,85 @@ lancer(poeme, est):-
 	write("Tu n'es plus son apprenti désormais."),nl,
 	write("Impossible de participer aux JO à présent."),nl,
 	fin.
-
+	
 lancer(poeme, ouest):-
 	position(poeme, en_main),
+	position_courante(dans_arene),
 	write("Tu oses lancer le poème d'Apollon !"), nl,
 	write("Apollon est offensé."),nl,
 	write("Tu n'es plus son apprenti désormais."),nl,
 	write("Impossible de participer aux JO à présent."),nl,
 	fin.	
 
+% lancer terrain_enfer
+lancer(disque_apollon, ouest) :- % ouest car c'est la qu'est apollon dans la premiere arene 
+	position(disque_apollon, en_main),
+	position_courante(terrain_enfer),
+	write("Tu tire à l'ouest avec le disque d'apollon."), nl, 
+	write("Le disque part jusqu'au bout du terrain, à la limite des spectateurs."), nl, 
+	write("La foule se lève et t'acclame."), nl, 
+	write("C'était un très bon choix."), nl, 
+	write("Personne n'arrive a faire mieux que toi."), nl, 
+	write("Tu gagne haut la main cette épreuve."), nl,
+	write("Pour te préparer à la suite, tu dois te rendre au palais qui se trouve au sud."), nl, 
+	changer_epreuve(nord), !.
+	
+lancer(disque_bois, ouest) :-
+	position(disque_bois, en_main),
+	position_courante(terrain_enfer),
+	write("Tu tire à l'ouest avec le disque en bois."), nl, 
+	write("Le disque est beaucoup trop lourd et se plante dans le sol presque à tes pieds."), nl, 
+	write("Comme si il voulait de lui même se planter dans le sol."), nl, 
+	write("Ca sent la magie dans l'air."), nl, 
+	write("Encore un coup du dieux des morts."), nl, 
+	write("Tu perds cette épreuve."), nl,
+	decrireFin.
+
+lancer(disque_acier, ouest) :-
+	position(X, en_main),
+	position_courante(terrain_enfer),
+	write("Tu tire à l'ouest avec le disque en acier."), nl, 
+	write("Le disque est beaucoup trop léger et se plante dans un panier à fruits rempli de grenades."), nl, 
+	write("Comme si il voulait de lui même rejoindre les fruits."), nl, 
+	write("Ca sent la magie dans l'air."), nl, 
+	write("Encore un coup du dieux des morts."), nl, 
+	write("Tu perds cette épreuve."), nl,
+	decrireFin.
+
+lancer(X, est) :- 
+	position(X, en_main),
+	position_courante(terrain_enfer),
+	write("Tu tire à l'est."), nl, 
+	write("La foule est morte de rire."), nl, 
+	write("Tu as clairement tiré du mauvais coté."), nl, 
+	write("Ton lancé a une distance négative."), nl, 
+	write("Tu perd l'épreuve en bon dernier."), nl,
+	decrireFin.
+	
+lancer(X, nord) :-
+	position(X, en_main),
+	position_courante(terrain_enfer),
+	write("Tu tire vers le nord."), nl, 
+	write("Le disque file tout droit vers les spectateurs."), nl, 
+	write("Hadès arrive juste au bon moment, juste avant que le disque ne touche quelqu'un."), nl, 
+	write("Il est furieux que tu t'en ai pris a son peuple."), nl, 
+	write("Tu es condamné aux pires tortures du Tartar pour cet affront."), nl, 
+	write("Hadès parlera à Apollon de ce que tu as fait."), nl, :
+	write("Apollon lui même maudit ton nom à présent."), nl, 
+	fin.
+	
+lancer(X, sud) :-
+	position(X, en_main),
+	position_courante(terrain_enfer),
+	write("Tu tire vers le nord."), nl, 
+	write("Le disque file tout droit vers Perséphone."), nl, 
+	write("Hadès intersepte le disque juste avant qu'il ne la touche."), nl, 
+	write("Hadès n'attend Pas une seconde avant de te jetter au Tartar."), nl, 
+	write("Tu n'aurais pas du attaquer sa reine."), nl, 
+	write("Hadès veillera lui même à ce que tu souffres chaque jour pour cet affront."), nl, :
+	fin.
+
+% si il n'a pas l'objet en main
 lancer(X, Y) :- 
 	\+ position(X, en_main),
 	write("Tu n'as pas cet objet en ta possession."), nl.
@@ -362,7 +460,7 @@ decrire(piste) :-
 	position(chaussure_hermes, en_main),
 	write("Tu te place sur le départ avec les chuassures d'hermès aux pieds."), nl, 
 	write("Les chaussures magiques sont parfaites et elles te font gagner la course haut la main."). 
-	write("Pour te préparer à la prochaine épreuve, tu dois te rendre au palais qui se trouve au sud."), nl, 
+	write("Pour te préparer à la suite, tu dois te rendre au palais qui se trouve au sud."), nl, 
 	changer_epreuve(ouest), !.
 
 decrire(piste) :-
@@ -391,6 +489,30 @@ decrire(piste) :-
 	write("Grâce à cela, tu gagne la course haut la main."), nl, 
 	write("Pour te préparer à la prochaine épreuve, tu dois te rendre au palais qui se trouve au sud."), nl,
 	changer_epreuve(ouest).
+	
+decrire(arene_enfer) :-
+	write("Vous arrivez à l'arène."), nl, 
+	write("On te demande de choisir un disque pour cette épreuve."), nl, 
+	write("Devant toi il y a une grand table où il ne reste plus que trois disques :"), nl,
+	write("Un dique en bois ('disque_bois') gravé avec un dessin d'une narcisse."), nl, 
+	write("Un disque en acier ('disque_acier') gravé avec un dessin d'une grenade (le fruit)."), nl, 
+	write("Et un disque que tu reconnais au premier regard avec un soleil gravé, le disque d'apollon ('disque_apollon')"), nl, 
+	write("exactement comme celui qui a mis fin a tes jours ..."), nl, 
+	write("Tu remarque un peu de sang séché dessus. Encore un coup sordide du dieu des morts."), nl, 
+	write("Dépèche toi de choisir, la foule t'attend au nord."), nl.
+
+decrire(terrain_enfer) :- 
+	write("Tu vas te placer au centre du terrain pour ton lancer."), nl, 
+	write("Tu as un air de déjà vu."), nl,
+	write("Au nord la foule t'acclame."), nl, 
+	write("Au sud, parmi la foule tu remaque le roi Hadès et la reine Perséphone qui t'observent avec malice."), nl, 
+	write("Cela t'inquiète, il a surement un piège."), nl, 
+	write("Tu es le premier à tirer de tous ceux qui participent."), nl, 
+	write("Il n'y a aucune indication de vers où il faut faire ton lancer."), nl, 
+	write("A l'est et à l'ouest le terrain est exactement le même."), nl, 
+	write("Tu regarde Hadès, son sourir s'élargie."), nl, 
+	write("Il va falloir compter sur la chance pour ce coup là."), nl, 
+	write("Tout le monde attend. Lance futur héro !"), nl.
 
 % description des fins suivant le nombre d épreuve réussi 
 % aucune epreuve reussi 
@@ -423,6 +545,12 @@ decrireFin :-
 	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl,
 	fin, !.
 
+% trois epreuve reussi
+decrire(fin_trois_epreuve) :-
+	write("Tu retourne au palais."), nl, 
+	write("Hadès t'y attend pour te faire remonter à la surface comme promis."), nl, 
+	decrire(fin_parfaite).
+
 % description de la bonne fin (trois epreuve reussi ou autre fin avec passage secret)
 decrire(fin_parfaite) :- 
 	write("Tu retrouve Apollon dans l'arène, au même endroit où tu es décédé. Il a l'air totalemnt vide."), nl,
@@ -438,7 +566,6 @@ decrire(fin_parfaite) :-
 regarder :-
         position_courante(Place),
         decrire(Place), nl.
-       % lister_objets(Place), nl.
 
 % lancer une nouvelle partie
 jouer :-
