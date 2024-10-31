@@ -244,6 +244,32 @@ passage(arene_enfer, nord, terrain_enfer) :-
 passage(arene_enfer, nord, terrain_enfer) :-
 	position(disque_apollon, en_main).
 	
+passage(arene_enfer, sud, maison) :-
+	write("Tu reste bloqué devant la table."), nl, 
+	write("Le disque d'apollon t'a boulversé."), nl, 
+	write("Bourré de colère, tu le prend et le lance au hasard dans la pièce."), nl, 
+	write("Il attéri sur hermès qui passait par là."), nl, 
+	write("Tu es condamné au Tartar pour avoir vexé le dieu de la ruse et pour ne pas avoir réussi les 3 épreuves."), nl,
+	write("Tu ne deviendras jamais un héro et tu ne pourras plus jamais revoir Apollon."), nl, 	fin.
+	
+passage(arene_enfer, est, maison) :-
+	write("Tu décide que tout cela ne rime à rien et que les Moires ont raisons."), nl,
+	write("Tu accepte ton sort. Tu vas voir Charon, tu vas te faire juger et tu finis pour l'éternité a Asphodèle."), nl, 
+	write("Tu ne reverra plus jamais Apollon."), nl, fin.
+	
+passage(arene_enfer, ouest, maison) :-
+	write("La vue du disque d'apollon fais remonter toute la tristesse qui est en toi."), nl, 
+	write("Tu te met en boule sous la table et tu pleure pendant des heures."), nl, 
+	write("Tu en pleure tellement que tu en perd le cours du temps."), nl, 
+	write("Hadès te retrouve là et s'assoit à coté de toi."), nl, 
+	write("Hadès : Ca arrive plus souvent que tu ne le crois tu sais. Les gens ont souvent du mal à accepter leur mort, tous leurs rêves qui n'aboutirons jamais, les futurs projets qui ne verront jamais le jour."), nl, 
+	write("Il se relève et te tend la main."), nl, 
+	write("Hadès : Viens avec moi, je vais te montrer que la vie aux enfers n'est pas si mal."), nl, 
+	write("Vous passez les jours suivants à explorer les enfers, à chanter et danser à Asphodèle, à faire du bateau avec Charon."), nl,
+	write("En effet la vie n'est pas si mal aux enfers."), nl, 
+	write("Hadès a été clément, tu as fini à Asphodèle et non au Tartar."), nl, 
+	write("Mais pour l'éternité tu auras ce vide dans ton coeur, ce vide qu'Apollon a laissé et qui ne sera plus jamais comblé."), nl, fin.
+
 passage(terrain_enfer, sud, palais) :-
 	epreuve(nord, oui),
 	write("Tu retourne au palais en ayant remporté l'épreuve du lancer de disque !"), nl.
@@ -433,40 +459,15 @@ lancer(disque, ouest):-
 	write("Rongé par les remords, tu ne veux plus jamais revoir un disque de ta vie."),nl,
 	fin.
 
-lancer(poeme, nord):-
+lancer(poeme, X):-
+	atom(X),
 	position(poeme, en_main),
-	position_courante(dans_arene),
+	position_courante(terrain),
 	write("Tu oses lancer le poème d'Apollon !"), nl,
 	write("Apollon est offensé."),nl,
 	write("Tu n'es plus son apprenti désormais."),nl,
 	write("Impossible de participer aux JO à présent."),nl,
 	fin.
-
-lancer(poeme, sud):-
-	position(poeme, en_main),
-	position_courante(dans_arene),
-	write("Tu oses lancer le poème d'Apollon !"), nl,
-	write("Apollon est offensé."),nl,
-	write("Tu n'es plus son apprenti désormais."),nl,
-	write("Impossible de participer aux JO à présent."),nl,
-	fin.
-
-lancer(poeme, est):-
-	position(poeme, en_main),
-	write("Tu oses lancer le poème d'Apollon !"), nl,
-	write("Apollon est offensé."),nl,
-	write("Tu n'es plus son apprenti désormais."),nl,
-	write("Impossible de participer aux JO à présent."),nl,
-	fin.
-	
-lancer(poeme, ouest):-
-	position(poeme, en_main),
-	position_courante(dans_arene),
-	write("Tu oses lancer le poème d'Apollon !"), nl,
-	write("Apollon est offensé."),nl,
-	write("Tu n'es plus son apprenti désormais."),nl,
-	write("Impossible de participer aux JO à présent."),nl,
-	fin.	
 
 % lancer terrain_enfer
 lancer(disque_apollon, ouest) :- % ouest car c'est la qu'est apollon dans la premiere arene 
