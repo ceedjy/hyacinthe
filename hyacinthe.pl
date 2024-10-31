@@ -50,12 +50,11 @@ changer_epreuve(X) :-
         assert(epreuve(X, oui)),
         !.
 
-% le compteur de vie pour la lutte (parler avec inconnu avant la lutte ajoute une vie)
+% le compteur de vie pour la lutte (parler avec inconnu avant la lutte et faire un choix non donné au ring3 ajoute une vie)
 vie(3).
 
 % changer le compteur de vie 
 changer_vie(Y) :-
-	atom(Y),
 	vie(X),
 	retract(vie(X)), 
 	assert(vie(X+Y)), 
@@ -86,7 +85,7 @@ prendre(X) :-
 
 % déplacements
 aller(Direction) :-
-        atom(Direction),
+		atom(Direction),
         position_courante(Ici),
         passage(Ici, Direction, La),
         retract(position_courante(Ici)),
@@ -200,11 +199,10 @@ passage(cours_forest, ouest, asphodele) :-
 
 passage(asphodele, ouest, ruelle) :-
 	write("Tu remarque une petite ruelle sombre à l'ouest et tu t'y engage."), nl, 
-	write("La nymphe ne t'a pas vu t' eclipser."), 
-	write("En fouillant un peu, tu trouve un vieux carton où dedans tu y trouve les chaussure volantes d'Hermès !"), nl,
+	write("La nymphe ne t'a pas vu t'eclipser."), nl,
+	write("En fouillant un peu, tu trouves un vieux carton où dedans tu y trouve les chaussure volantes d'Hermès !"), nl,
 	write("Tu les met aux pieds, et en plus elles sont parfaitement à ta taille ! "), nl,
-	write("Tu vas pouvoir courir avec !"), nl,
-	prendre(chaussure_hermes).
+	write("Tu vas pouvoir courir avec !"), nl.
 
 passage(asphodele, nord, piste) :-
 	write("Vous vous dirigez vers la piste de course."), nl,
@@ -302,12 +300,12 @@ passage(salle_attente, nord, salle_attente) :-
 	write("Toi : Qui ça ?"), nl, 
 	write("Inconnu : Chronos ! Tu ne savais pas qui tu allais affronter ?"), nl, 
 	write("Tu te décompose. Comment battre le plus fort de tous les titans ?"), nl, 
-	write("Inconnu : Si tu veux un conseil petit, vise les yeux, il parait que c'est de là qu'il tient son pouvoir."), nl, 
+	write("Inconnu : Si tu veux un conseil petit, vise les yeux, il parait que c'est de là qu'il tient son pouvoir."), nl,
 	changer_vie(1).
 
 passage(salle_attente, ouest, ring1) :-
 	write("L'autre combatant est appelé. Il va combattre en passant par la lourde porte."), nl, 
-	write("Tu attent encore un peu. Puis rapidement après c'est toi qui est appelé."), nl, 
+	write("Tu attend encore un peu. Puis rapidement après c'est toi qui est appelé."), nl, 
 	write("Le précédent combat a été très rapide, trop rapide."), nl, 
 	write("Tu entre dans l'arène au bout de ce long couloir sombre."), nl, 
 	write("La lumière t'aveugle. Le bruit de la foule est assourdissant."), nl, 
@@ -363,7 +361,7 @@ passage(ring4, est, ring5) :-
 passage(ring5, sud, ring6) :-
 	write("Tu te décale et lui enfonce tes deux pouces dans les yeux."), nl, 
 	write("Il hurle de douleur."), nl,
-	write("Il re repousse et vous tombez tous les deux à terre."), nl.
+	write("Il te repousse et vous tombez tous les deux à terre."), nl.
 
 passage(ring5, est, ring6) :-
 	write("Tu charge ton poing pour l'attaque, mais il est plus rapide que toi."), nl, 
@@ -389,7 +387,7 @@ oracle :-
         write("prendre(objet).          -- pour prendre un objet."), nl,
         write("lacher(objet).           -- pour lacher un objet en votre possession."), nl,
         write("regarder.                -- pour regarder autour de vous."), nl,
-        write("oracle.            		-- pour revoir ce message !."), nl,
+        write("oracle.            	 -- pour revoir ce message !."), nl,
         write("fin.                     -- pour terminer la partie et quitter."), nl,
         nl.
 
@@ -397,7 +395,7 @@ oracle :-
 % lancer dans_arene
 lancer(disque, nord):-
 	position(disque, en_main),
-	position_courante(dans_arene),
+	position_courante(terrain),
 	write("Quel beau lancé !"), nl,
 	write("Oh non ! Un violent coup de vent fait dévier le disque !"),nl,
 	write("Mais je connais ce vent ! C'est maléfique Zéphyr, dieu du vent !"),nl,
@@ -408,7 +406,7 @@ lancer(disque, nord):-
 
 lancer(disque, sud):-
 	position(disque, en_main),
-	position_courante(dans_arene),
+	position_courante(terrain),
 	write("Quel beau lancé !"),nl,
 	write("Oh non ! Il file droit vers la ville !"),nl,
 	write("Hermes qui passait par là ce le prend en pleine poire."),nl,
@@ -418,7 +416,7 @@ lancer(disque, sud):-
 
 lancer(disque, est):-
 	position(disque, en_main),
-	position_courante(dans_arene),
+	position_courante(terrain),
 	write("Quel beau lancé !"),nl,
 	write("Dommage pour la direction !"),nl,
 	write("Mais attend, quelqu'un semble l'avoir arrêté."),nl,
@@ -428,7 +426,7 @@ lancer(disque, est):-
 
 lancer(disque, ouest):-
 	position(disque, en_main),
-	position_courante(dans_arene),
+	position_courante(terrain),
 	write("Quel beau lancé !"),nl,
 	write("Oh non, il file tout droit vers Apollon !"),nl,
 	write("Il n'a pas le temps de l'esquiver et c'est le drame !"),nl,
@@ -558,7 +556,8 @@ decrire(entree_arene) :-
 decrire(dans_arene) :-
 	write("Tu es dans l'arène."), nl,
 	write("Tu t'apprêtes à t'entraîner pour le lancer de disque."), nl,
-	write("Sur la table devant toi se trouve un ('disque') et le ('poeme') d'Apollon."), nl.
+	write("Sur la table devant toi se trouve un ('disque') et le ('poeme') d'Apollon."), nl,
+	write("Prend ce que tu as besoin et va t'entrainer."), nl.
 
 decrire(terrain) :-
 	write("Tu es au centre du terrain"),nl, 
@@ -600,7 +599,8 @@ decrire(cours_forest) :-
 	write("La sortie est à l'ouest."), nl.
 
 decrire(ruelle) :-
-	write("A l'est se trouve la rue animée où tu as laissé la nymphe."), nl.
+	write("A l'est se trouve la rue animée où tu as laissé la nymphe."), nl,
+	prendre(chaussure_hermes).
 
 decrire(piste) :-
 	position(chaussure_hermes, en_main),
@@ -715,6 +715,40 @@ decrire(ring6) :- % cas de défaite
 	decrireFin.
 
 % description des fins suivant le nombre d épreuve réussi 
+% description de la bonne fin (trois epreuve reussi ou autre fin avec passage secret)
+decrire(fin_parfaite) :- 
+	write("Tu retrouve Apollon dans l'arène, au même endroit où tu es décédé. Il a l'air totalemnt vide."), nl,
+	write("Tu te rapproche doucement de lui et met une main sur son épaule."), nl, 
+	write("Ses yeux s'illuminent en te voyant. Il se lève d'un bond et saute dans tes bras pour te serrer très fort contre lui."), nl, 
+	write("Quelques mois plus tard, tu participes aux JO et tu les remportent haut la main."), nl, 
+	write("Toutes mes félicitations Hyacinthe !"), nl,
+	write("Tu as réussi à devenir un héro et tu passeras le restant de tes jours avec l'homme de ta vie."), nl,
+	write("Et cette fois si, même la mort elle même ne pourra pas vous séparer."), nl, 
+	fin.
+
+% trois epreuve reussi
+decrire(fin_trois_epreuve) :-
+	write("Tu retournes au palais."), nl, 
+	write("Hadès t'y attend pour te faire remonter à la surface comme promis."), nl, 
+	decrire(fin_parfaite).
+
+% pour savoir combien d épreuves ont étés réussis 
+% une epreuve reussi 
+test_fin1(A, B, C) :-
+	A == oui, 
+	B == non, 
+	C == non.
+	
+% deux epreuves reussis 
+test_fin2(A, B, C) :- 
+	A == non, 
+	B == oui, 
+	C == oui.
+
+% pour faire le ou logique 
+ou(A, B, C) :-
+	A ; B ; C.
+
 % aucune epreuve reussi 
 decrireFin :-
 	epreuve(ouest, non),
@@ -729,8 +763,8 @@ decrireFin :-
 	epreuve(ouest, X),
 	epreuve(nord, Y),
 	epreuve(est, Z),
-	((X == oui) /\ (Y == non) /\ (Z == non)) \/ ((Y == oui) /\ (X == non) /\ (Z == non)) \/ ((Z == oui) /\ (Y == non) /\ (X == non)), 
-	write("Hadès t'avais prévenu. Tu es jeté au Tartar."), nl, 
+	ou(test_fin1(X, Y, Z), test_fin1(Y, X, Z), test_fin1(Z, X, Y)),
+	write("Hadèsss t'avais prévenu. Tu es jeté au Tartar."), nl, 
 	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl,
 	fin, !.
 
@@ -739,28 +773,11 @@ decrireFin :-
 	epreuve(ouest, X),
 	epreuve(nord, Y),
 	epreuve(est, Z),
-	((X == non) /\ (Y == oui) /\ (Z == oui)) \/ ((Y == non) /\ (X == oui) /\ (Z == oui)) \/ ((Z == non) /\ (Y == oui) /\ (X == oui)), 
+	ou(test_fin2(X, Y, Z), test_fin2(Y, X, Z), test_fin2(Z, X, Y)),
 	write("Hadès t'avais prévenu. Tu ne remonteras pas à la surface."), nl, 
-	write("Cependant il sait lêtre clément. Tu ne finira pas au Tartar mais a Asphodèle."), nl, 
+	write("Cependant il sait être clément. Tu ne finira pas au Tartar mais à Asphodèle."), nl, 
 	write("Tu ne reverra plus jamais Apollon et tu ne deviendra jamais un héro."), nl,
 	fin, !.
-
-% trois epreuve reussi
-decrire(fin_trois_epreuve) :-
-	write("Tu retourne au palais."), nl, 
-	write("Hadès t'y attend pour te faire remonter à la surface comme promis."), nl, 
-	decrire(fin_parfaite).
-	
-% description de la bonne fin (trois epreuve reussi ou autre fin avec passage secret)
-decrire(fin_parfaite) :- 
-	write("Tu retrouve Apollon dans l'arène, au même endroit où tu es décédé. Il a l'air totalemnt vide."), nl,
-	write("Tu te rapproche doucement de lui et met une main sur son épaule."), nl, 
-	write("Ses yeux s'illuminent en te voyant. Il se lève d'un bond et saute dans tes bras pour te serrer très fort contre lui."), nl, 
-	write("Quelques mois plus tard, tu participes aux JO et tu les remportent haut la main."), nl, 
-	write("Toutes mes félicitations Hyacinthe !"), nl,
-	write("Tu as réussi à devenir un héro et tu passeras le restant de tes jours avec l'homme de ta vie."), nl,
-	write("Et cette fois si, même la mort elle même ne pourra pas vous séparer."), nl, 
-	fin.
 
 % regarder autour de soi
 regarder :-
