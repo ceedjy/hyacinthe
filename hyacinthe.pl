@@ -389,7 +389,7 @@ oracle :-
         write("prendre(objet).          -- pour prendre un objet."), nl,
         write("lacher(objet).           -- pour lacher un objet en votre possession."), nl,
         write("regarder.                -- pour regarder autour de vous."), nl,
-        write("oracle.            	-- pour revoir ce message !."), nl,
+        write("oracle.            		-- pour revoir ce message !."), nl,
         write("fin.                     -- pour terminer la partie et quitter."), nl,
         nl.
 
