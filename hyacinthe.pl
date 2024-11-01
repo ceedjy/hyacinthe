@@ -418,6 +418,23 @@ oracle :-
         nl.
 
 % l instruction lancer :
+% lancer peu importe l ordre des mots : 
+lancer(X, Y) :-
+	X == nord, 
+	lancer(Y, nord).
+
+lancer(X, Y) :-
+	X == sud, 
+	lancer(Y, sud).
+
+lancer(X, Y) :-
+	X == est, 
+	lancer(Y, est).
+
+lancer(X, Y) :-
+	X == ouest, 
+	lancer(Y, ouest).
+
 % lancer dans_arene
 lancer(disque, nord):-
 	position(disque, en_main),
