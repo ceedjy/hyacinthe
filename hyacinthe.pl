@@ -213,7 +213,7 @@ passage(ruelle, est, asphodele) :-
 	write("Elle n'a meme pas remarqué ton départ."), nl.
 
 passage(ruelle, ouest, fin_parfaite) :-
-	write("Tu décides de prendre la fuite en volant avec les chuassures d'hermès."), nl,
+	write("Tu décides de prendre la fuite en volant avec les chaussures d'hermès."), nl,
 	write("Tu réussi à remonter dans le monde des vivants sans te faire remarquer."), nl. 
 
 passage(piste, sud, palais) :-
@@ -680,7 +680,7 @@ decrire(ring2) :-
 
 decrire(ring3) :- 
 	write("Tu vois une ouverture."), nl,
-	write("Tu peux le fraper dans l'abdomen en frappant au sud."), nl, 
+	write("Tu peux le frapper dans l'abdomen en frappant au sud."), nl, 
 	write("Ou tu peux le frapper au genoux en te décalant à l'ouest."), nl.
 
 decrire(ring4) :- 
