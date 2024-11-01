@@ -727,11 +727,11 @@ decrire(fin_parfaite) :-
 	write("Et cette fois si, même la mort elle même ne pourra pas vous séparer."), nl, nl, 
 	write("                  _(_)_                          wWWWw   _"), nl, 
 	write("      @@@@       (_)@(_)   vVVVv     _     @@@@  (___) _(_)_"), nl, 
-	write("     @@()@@ wWWWw  (_)\    (___)   _(_)_  @@()@@   Y  (_)@(_)"), nl, 
-	write("      @@@@  (___)     `|/    Y    (_)@(_)  @@@@   \|/   (_)\ "), nl, 
-	write("       /      Y       \|    \|/    /(_)    \|      |/      |"), nl, 
-	write("    \ |     \ |/       | / \ | /  \|/       |/    \|      \|/"), nl, 
-	write("    \\|//   \\|///  \\\|//\\\|/// \|///  \\\|//  \\|//  \\\|// "), nl, 
+	write("     @@()@@ wWWWw  (_)\\    (___)   _(_)_  @@()@@   Y  (_)@(_)"), nl, 
+	write("      @@@@  (___)     `|/    Y    (_)@(_)  @@@@   \\|/   (_)\\ "), nl, 
+	write("       /      Y       \\|    \\|/    /(_)    \\|      |/      |"), nl, 
+	write("    \\ |     \\ |/       | / \\ | /  \\|/       |/    \\|      \\|/"), nl, 
+	write("    \\\\|//   \\\\|///  \\\\\\|//\\\\\\|/// \\|///  \\\\\\|//  \\\\|//  \\\\\\|// "), nl, 
 	write("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"), nl, 
 	fin.
 
@@ -795,11 +795,11 @@ regarder :-
 
 % lancer une nouvelle partie
 jouer :-
-	write(" _   _                      _         _    _"), nl, :
+	write(" _   _                      _         _    _"), nl,
 	write("| | | | _   _   __ _   ___ (_) _ __  | |_ | |__    ___"), nl, 
-	write("| |_| || | | | / _` | / __|| || '_ \ | __|| '_ \  / _ \ "), nl, 
+	write("| |_| || | | | / _` | / __|| || '_ \\ | __|| '_ \\  / _ \\ "), nl, 
 	write("|  _  || |_| || (_| || (__ | || | | || |_ | | | ||  __/ "), nl, 
-	write("|_| |_| \__, | \__,_| \___||_||_| |_| \__||_| |_| \___| "), nl,
+	write("|_| |_| \\__, | \\__,_| \\___||_||_| |_| \\__||_| |_| \\___| "), nl,
 	write("        |___/"), nl, nl,
 	write("Bonjour Hyacinthe ! Bienvenu dans cette nouvelle quête."),nl,
 	write("Je suis l'Oracle et je t'accompagnerais tout au long de ton aventure."), nl,
