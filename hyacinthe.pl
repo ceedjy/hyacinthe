@@ -724,7 +724,15 @@ decrire(fin_parfaite) :-
 	write("Quelques mois plus tard, tu participes aux JO et tu les remportent haut la main."), nl, 
 	write("Toutes mes félicitations Hyacinthe !"), nl,
 	write("Tu as réussi à devenir un héro et tu passeras le restant de tes jours avec l'homme de ta vie."), nl,
-	write("Et cette fois si, même la mort elle même ne pourra pas vous séparer."), nl, 
+	write("Et cette fois si, même la mort elle même ne pourra pas vous séparer."), nl, nl, 
+	write("                  _(_)_                          wWWWw   _"), nl, 
+	write("      @@@@       (_)@(_)   vVVVv     _     @@@@  (___) _(_)_"), nl, 
+	write("     @@()@@ wWWWw  (_)\    (___)   _(_)_  @@()@@   Y  (_)@(_)"), nl, 
+	write("      @@@@  (___)     `|/    Y    (_)@(_)  @@@@   \|/   (_)\ "), nl, 
+	write("       /      Y       \|    \|/    /(_)    \|      |/      |"), nl, 
+	write("    \ |     \ |/       | / \ | /  \|/       |/    \|      \|/"), nl, 
+	write("    \\|//   \\|///  \\\|//\\\|/// \|///  \\\|//  \\|//  \\\|// "), nl, 
+	write("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"), nl, 
 	fin.
 
 % trois epreuve reussi
@@ -787,6 +795,12 @@ regarder :-
 
 % lancer une nouvelle partie
 jouer :-
+	write(" _   _                      _         _    _"), nl, :
+	write("| | | | _   _   __ _   ___ (_) _ __  | |_ | |__    ___"), nl, 
+	write("| |_| || | | | / _` | / __|| || '_ \ | __|| '_ \  / _ \ "), nl, 
+	write("|  _  || |_| || (_| || (__ | || | | || |_ | | | ||  __/ "), nl, 
+	write("|_| |_| \__, | \__,_| \___||_||_| |_| \__||_| |_| \___| "), nl,
+	write("        |___/"), nl, nl,
 	write("Bonjour Hyacinthe ! Bienvenu dans cette nouvelle quête."),nl,
 	write("Je suis l'Oracle et je t'accompagnerais tout au long de ton aventure."), nl,
 	write("Voilà des mois que tu t'entraînes avec Apollon pour les JO. Ton moment de gloire approche jeune héro !"),nl,
